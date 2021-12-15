@@ -41,18 +41,15 @@ object runPingPong extends App {
 
 
 import akka.actor.{Actor, ActorLogging, ActorSystem, Props}
+
 // Second Way
 
 object PingPongCommunication extends App {
 
-  // Actors can create other actors
-
   object Ping {
     case class CreateChild(name: String)
   }
-
   class Ping extends Actor with ActorLogging {
-
     import Ping._
 
     override def receive: Receive = {
@@ -63,9 +60,7 @@ object PingPongCommunication extends App {
         childRef ! "Ping"
 
       case "Pong" => log.info("Ping")
-
     }
-
   }
 
   class Pong extends Actor with ActorLogging{
@@ -77,9 +72,7 @@ object PingPongCommunication extends App {
   }
 
   import Ping._
-
   val system = ActorSystem("ParentChildDemo")
   val ping = system.actorOf(Props[Ping], "parent")
   ping ! CreateChild("child")
-
 }
